@@ -1,28 +1,28 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
+import Sidebar from './components/Sidebar'
+import Header from './components/Header'
+import MainDashboard from './components/MainDashboard'
+import ChatPanel from './components/ChatPanel'
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
+    <div className="min-h-screen bg-neutral-100 text-neutral-900">
+      <div className="flex h-screen overflow-hidden">
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+        <div className="flex flex-1 flex-col">
+          <Header onMenu={() => setSidebarOpen((o) => !o)} />
+          <div className="flex flex-1 overflow-hidden">
+            <main className="flex-1 overflow-y-auto p-4 lg:p-6" aria-label="Main content">
+              <MainDashboard />
+            </main>
+            <aside className="hidden xl:block w-[360px] border-l border-neutral-200 bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+              <ChatPanel />
+            </aside>
+          </div>
         </div>
       </div>
     </div>
   )
 }
-
-export default App
